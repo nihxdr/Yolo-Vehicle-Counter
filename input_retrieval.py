@@ -14,9 +14,9 @@ import os
 def parseCommandLineArguments():
 	# construct the argument parse and parse the arguments
 	ap = argparse.ArgumentParser()
-	ap.add_argument("-i", "--input", required=True,
+	ap.add_argument("-i", "--input", required=False,
 		help="path to input video")
-	ap.add_argument("-o", "--output", required=True,
+	ap.add_argument("-o", "--output", required=False,
 		help="path to output video")
 	ap.add_argument("-y", "--yolo", required=True,
 		help="base path to YOLO directory")
@@ -34,9 +34,12 @@ def parseCommandLineArguments():
 	LABELS = open(labelsPath).read().strip().split("\n")
 	
 	# derive the paths to the YOLO weights and model configuration
-	weightsPath = os.path.sep.join([args["yolo"], "yolov3.weights"])
-	configPath = os.path.sep.join([args["yolo"], "yolov3.cfg"])
+	weightsPath = os.path.sep.join([args["yolo"], "yolov3-tiny.weights"])
+	configPath = os.path.sep.join([args["yolo"], "yolov3-tiny.cfg"])
 	
+	# weightsPath = os.path.sep.join([args["yolo"], "yolov3.weights"])
+	# configPath = os.path.sep.join([args["yolo"], "yolov3.cfg"])
+
 	inputVideoPath = args["input"]
 	outputVideoPath = args["output"]
 	confidence = args["confidence"]

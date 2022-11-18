@@ -4,6 +4,7 @@ import imutils
 import time
 from scipy import spatial
 import cv2
+import pafy
 from input_retrieval import *
 
 #All these classes will be counted as 'vehicles'
@@ -170,13 +171,23 @@ if USE_GPU:
 	net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
 
 ln = net.getLayerNames()
-ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
+ln = [ln[i - 1] for i in net.getUnconnectedOutLayers()]
 
 # initialize the video stream, pointer to output video file, and
 # frame dimensions
-videoStream = cv2.VideoCapture(inputVideoPath)
+
+url = "https://www.youtube.com/watch?v=5_XSYlAfJZM"    #"https://youtu.be/rQ55zQZjUro"
+video = pafy.new(url)
+best = video.getbest(preftype="mp4")
+
+videoStream = cv2.VideoCapture(best.url) # inputVideoPath
 video_width = int(videoStream.get(cv2.CAP_PROP_FRAME_WIDTH))
 video_height = int(videoStream.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+
+# videoStream = cv2.VideoCapture(inputVideoPath)
+# video_width = int(videoStream.get(cv2.CAP_PROP_FRAME_WIDTH))
+# video_height = int(videoStream.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
 # Specifying coordinates for a default line 
 x1_line = 0
