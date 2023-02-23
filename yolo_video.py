@@ -5,6 +5,7 @@ import time
 from scipy import spatial
 import cv2
 import pafy
+import streamlink
 from input_retrieval import *
 
 #All these classes will be counted as 'vehicles'
@@ -177,8 +178,8 @@ ln = [ln[i - 1] for i in net.getUnconnectedOutLayers()]
 # frame dimensions
 
 url = "https://www.youtube.com/watch?v=5_XSYlAfJZM"    #"https://youtu.be/rQ55zQZjUro"
-video = pafy.new(url)
-best = video.getbest(preftype="mp4")
+video = streamlink.streams(url)
+best = video["best"]
 
 videoStream = cv2.VideoCapture(best.url) # inputVideoPath
 video_width = int(videoStream.get(cv2.CAP_PROP_FRAME_WIDTH))
